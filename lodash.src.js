@@ -11382,12 +11382,15 @@
     }
 
     /**
-     * Creates a function which invokes the method at `path` on a given object.
+     * Creates a function that invokes the method at `path` on a given object
+     * and prepends any additional `_.method` arguments to those provided to the
+     * created function.
      *
      * @static
      * @memberOf _
      * @category Utility
      * @param {Array|string} path The path of the method to invoke.
+     * @param {...*} [partials] The arguments to be partially applied.
      * @returns {Function} Returns the new function.
      * @example
      *
@@ -11402,20 +11405,22 @@
      * _.invoke(_.sortBy(objects, _.method(['a', 'b', 'c'])), 'a.b.c');
      * // => [1, 2]
      */
-    var method = restParam(function(path, args) {
+    var method = restParam(function(path, partials) {
       return function(object) {
-        return invokePath(object, path, args);
+        return invokePath(object, path, partials);
       };
     });
 
     /**
-     * The opposite of `_.method`; this method creates a function which invokes
-     * the method at a given path on `object`.
+     * The opposite of `_.method`; this method creates a function that invokes
+     * the method at a given path on `object` and prepends any additional `_.methodOf`
+     * arguments to those provided to the created function.
      *
      * @static
      * @memberOf _
      * @category Utility
      * @param {Object} object The object to query.
+     * @param {...*} [partials] The arguments to be partially applied.
      * @returns {Function} Returns the new function.
      * @example
      *
@@ -11428,9 +11433,9 @@
      * _.map([['a', '2'], ['c', '0']], _.methodOf(object));
      * // => [2, 0]
      */
-    var methodOf = restParam(function(object, args) {
+    var methodOf = restParam(function(object, partials) {
       return function(path) {
-        return invokePath(object, path, args);
+        return invokePath(object, path, partials);
       };
     });
 
